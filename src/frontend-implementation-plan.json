@@ -1,0 +1,68 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix celebration inline photo rendering and base-path-safe asset URLs",
+  "requirements": [
+    {
+      "id": "REQ-33",
+      "summary": "Ensure both celebration photos reliably load as static inline images after clicking YES, eliminating erroneous fallback rendering when assets are present.",
+      "acceptanceCriteria": [
+        "On the YES/celebration state, both photos render inline at the top of the celebration content on desktop and mobile/iPad Safari/Chrome.",
+        "The fallback text \"Photo could not be loaded\" does not appear when the assets exist and are reachable.",
+        "No backend calls are used to fetch the images; they are loaded as static assets from the frontend."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/InlineCelebration.tsx",
+          "operation": "modify",
+          "description": "Update the two CelebrationPhoto usages to source the static assets from frontend/public/assets/generated/valentine-photo-1.jpg and frontend/public/assets/generated/valentine-photo-2.jpg via a base-path-safe URL builder (instead of hardcoded absolute /assets/... paths), while keeping the existing inline stacked layout and all celebration copy unchanged."
+        },
+        {
+          "path": "frontend/src/utils/assetUrl.ts",
+          "operation": "create",
+          "description": "Add a small helper to build static asset URLs using the runtime base path (e.g., import.meta.env.BASE_URL) so public assets like frontend/public/assets/generated/valentine-photo-1.jpg and frontend/public/assets/generated/valentine-photo-2.jpg resolve correctly across deployments."
+        },
+        {
+          "path": "frontend/src/components/CelebrationPhoto.tsx",
+          "operation": "modify",
+          "description": "Improve load handling to reduce false negatives (e.g., ensure load state is set only after successful load/decode where possible) so valid static images do not incorrectly fall back to \"Photo could not be loaded\" in common browsers."
+        }
+      ]
+    },
+    {
+      "id": "REQ-34",
+      "summary": "Harden celebration photo src handling so the static image URLs work when the app is served from a non-root base path without changing filenames or inline layout.",
+      "acceptanceCriteria": [
+        "Photo URLs resolve correctly whether the app is served at `/` or under a base path (no 404s for the two photo requests).",
+        "The celebration UI remains inline (no fullscreen/lightbox behavior) with the photos stacked vertically above the existing celebration text."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/assetUrl.ts",
+          "operation": "create",
+          "description": "Implement base-path-aware URL composition for public assets (join base path with an asset-relative path like assets/generated/valentine-photo-1.jpg and assets/generated/valentine-photo-2.jpg) to avoid leading-slash absolute paths that break under subdirectory hosting."
+        },
+        {
+          "path": "frontend/src/components/InlineCelebration.tsx",
+          "operation": "modify",
+          "description": "Switch the celebration photo src values to use the base-path-aware helper so requests resolve correctly under / and under a subdirectory, without changing filenames, photo order, or the inline stacked layout (no fullscreen/lightbox/overlay behavior)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-35",
+      "summary": "Make CelebrationPhoto resilient to src changes and transient load/decode errors by resetting state on src updates and providing a retry-friendly path.",
+      "acceptanceCriteria": [
+        "If the `src` prop changes (or the component remounts), the component attempts to load again instead of staying stuck on the fallback UI.",
+        "Successful loads show the image with the existing fade-in behavior and do not regress the current styling/theme."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/CelebrationPhoto.tsx",
+          "operation": "modify",
+          "description": "Reset internal error/loading state whenever src changes; add a retry mechanism (e.g., remount the <img> via a key and allow re-attempt after a transient onError/failed decode) so the component does not permanently lock into the fallback state; preserve existing fade-in class behavior and styling/theme, and keep the fallback text \"Photo could not be loaded\" unchanged when shown."
+        }
+      ]
+    }
+  ]
+}

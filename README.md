@@ -1,2 +1,3 @@
-# romantic-interactive-valentine-single-purpose-page-with-evasive-no-button-and-ye
-Exported from Caffeine project: Romantic interactive Valentine single-purpose page with evasive No button and Yes celebration
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

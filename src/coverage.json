@@ -1,0 +1,67 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-12T20:35:03.029Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 3,
+    "items": [
+      {
+        "id": "REQ-33",
+        "summary": "Fix the celebration-state inline photo loading so that both static images at `/assets/generated/valentine-photo-1.jpg` and `/assets/generated/valentine-photo-2.jpg` reliably render after clicking YES, instead of showing the fallback text \"Photo could not be loaded\".",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/InlineCelebration.tsx",
+          "frontend/src/utils/assetUrl.ts",
+          "frontend/src/components/CelebrationPhoto.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/InlineCelebration.tsx",
+          "frontend/src/utils/assetUrl.ts",
+          "frontend/src/components/CelebrationPhoto.tsx"
+        ]
+      },
+      {
+        "id": "REQ-34",
+        "summary": "Harden static asset URL handling for the celebration photos so the image `src` works correctly when the app is served from a non-root base path (e.g., behind a gateway or under a subdirectory), without changing the filenames or the inline layout.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/utils/assetUrl.ts",
+          "frontend/src/components/InlineCelebration.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/utils/assetUrl.ts",
+          "frontend/src/components/InlineCelebration.tsx"
+        ]
+      },
+      {
+        "id": "REQ-35",
+        "summary": "Improve the `CelebrationPhoto` component’s reliability: ensure it resets its error/loading state when `src` changes, and provide a graceful retry-friendly rendering path so transient decode/load issues do not permanently lock the component into the fallback state.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/CelebrationPhoto.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/CelebrationPhoto.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/components/CelebrationPhoto.tsx",
+    "frontend/src/components/InlineCelebration.tsx",
+    "frontend/src/utils/assetUrl.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

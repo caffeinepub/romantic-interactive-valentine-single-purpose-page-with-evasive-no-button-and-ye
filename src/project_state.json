@@ -1,0 +1,395 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 31,
+  "summary": "Build a single-purpose, advanced interactive romantic-themed webpage that asks the user to be the creator's Valentine, with Yes/No options where the No button evades hovering and clicking Yes shows a celebratory state with personalized text, styled with a black-and-pink theme and runnable on iPad/mobile browsers (Chrome/Safari) using only HTML/CSS/JavaScript; replace the celebration GIF with two vertically stacked photos displayed above the celebratory text, shown inline on the page (no fullscreen/lightbox auto-open).",
+  "architectural_notes": [
+    "Single-purpose interactive webpage: hover-evading 'No' button and 'Yes' click triggers celebratory GIF + personalized text.",
+    "Ensure cross-browser/mobile compatibility (iPad Safari/Chrome): responsive layout, touch-friendly interactions, avoid hover-only behavior and nonstandard APIs.",
+    "Evasive “No” button should react with very fast movement to keep it effectively unclickable/unreachable, while still remaining on-screen and touch-safe across iPad/mobile.",
+    "Button labels on the initial prompt include emojis alongside text (YES: 👅, NO: 😔).",
+    "Evasive NO motion should remain the same speed but use smooth transitions for movement/hover feedback.",
+    "Apply consistent romantic typography across the full experience (initial + celebration states).",
+    "Update celebratory state message copy to use the names \"Zainab\" and \"Hamza\" (per latest request: \"zainab hamza\").",
+    "Update the last line of the celebratory message copy to exactly: \"Your Hamza loves you soo muchieee\".",
+    "Add an additional final line after \"Your Hamza loves you soo muchieee\": \"PLEASE BE MY WIFE AND THE MOTHER OF MY KIDS I LOVE YOU INFINTE TIMES\".",
+    "Add more romantic celebratory lines that clearly express lifelong love and a shared future together (post-YES state), keeping the overall romantic/playful tone."
+  ],
+  "known_issues": [
+    "Requirements changed: photos must be visible inline on the page (no fullscreen/lightbox auto-open) while keeping celebration text below; ensure current implementation matches this and both photos reliably render.",
+    "Reported issue: photos are not displaying/appearing as expected on YES (user asked to 'forcefully open them'); need to ensure they render automatically inline above the text with no fullscreen behavior.",
+    "Celebration state shows error: \"photo could not be loaded\"; fix required so both inline photos reliably load/render above the text."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-single-purpose-romantic-advanced-interactive-webpage-that-asks-will-you-be-my-valentine-and-presents-exactly-two-options-yes-and-no",
+      "title": "Create a single-purpose romantic, advanced interactive webpage that asks: \"Will you be my Valentine?\" and presents exactly two options: \"Yes\" and \"No\".",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-no-button-hover-interaction-so-that-when-the-user-moves-their-cursor-toward-or-over-no-the-button-moves-away-to-a-new-position-making-it-effectively-impossible-to-click",
+      "title": "Implement the \"No\" button hover interaction so that when the user moves their cursor toward or over \"No\", the button moves away to a new position, making it effectively impossible to click.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-when-the-user-clicks-yes-transition-the-page-into-a-celebratory-state-that-displays-an-on-theme-meme-gif-and-a-congratulatory-message-that-includes-the-names-zainab-and-hamza-and-a-medium-sized-emoji-placed-inline-so-it-visually-fits-the-text",
+      "title": "When the user clicks \"Yes\", transition the page into a celebratory state that displays an on-theme meme GIF and a congratulatory message that includes the names \"Zainab\" and \"Hamza\" and a medium-sized emoji placed inline so it visually fits the text.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-use-english-for-all-user-facing-text-and-keep-the-content-romantic-and-playful-do-not-include-threats-or-graphic-violence-in-the-displayed-message",
+      "title": "Use English for all user-facing text and keep the content romantic and playful; do not include threats or graphic violence in the displayed message.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-romantic-visual-theme-colors-typography-layout-motion-consistently-across-the-page-with-advanced-interactive-flourishes-e-g-subtle-floating-hearts-sparkles-soft-glow-smooth-transitions-while-keeping-performance-smooth",
+      "title": "Apply a coherent romantic visual theme (colors, typography, layout, motion) consistently across the page, with advanced interactive flourishes (e.g., subtle floating hearts/sparkles, soft glow, smooth transitions) while keeping performance smooth.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-required-generated-image-asset-s-to-the-frontend-as-static-files-and-render-them-directly-from-the-frontend-not-via-the-backend-place-generated-assets-under-frontend-public-assets-generated-and-reference-them-in-the-ui",
+      "title": "Add the required generated image asset(s) to the frontend as static files and render them directly from the frontend (not via the backend). Place generated assets under frontend/public/assets/generated and reference them in the UI.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-valentine-page-visual-theme-to-a-consistent-black-and-pink-color-scheme-across-all-states-initial-prompt-and-celebration-including-backgrounds-gradients-card-styling-text-gradients-button-styles-and-heart-sparkle-accents",
+      "title": "Update the Valentine page visual theme to a consistent black-and-pink color scheme across all states (initial prompt and celebration), including backgrounds/gradients, card styling, text gradients, button styles, and heart/sparkle accents.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-interaction-model-works-smoothly-on-ipad-and-other-touch-devices-chrome-and-safari-including-reliable-touch-behavior-for-the-evasive-no-button-and-responsive-layout-without-accidental-scrolling-or-off-screen-button-placement",
+      "title": "Ensure the interaction model works smoothly on iPad and other touch devices (Chrome and Safari), including reliable touch behavior for the evasive “No” button and responsive layout without accidental scrolling or off-screen button placement.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-revise-any-user-facing-copy-that-implies-threats-or-big-trouble-to-keep-the-tone-romantic-and-playful-in-english",
+      "title": "Revise any user-facing copy that implies threats or “big trouble” to keep the tone romantic and playful in English.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-evasive-no-button-interaction-so-the-no-option-is-completely-unreachable-by-making-it-evade-extremely-fast-whenever-the-user-approaches-it-mouse-trackpad-stylus-or-touch-without-breaking-layout-on-mobile-ipad-safari-chrome",
+      "title": "Update the evasive “No” button interaction so the “No” option is completely unreachable by making it evade extremely fast whenever the user approaches it (mouse, trackpad, stylus, or touch), without breaking layout on mobile/iPad Safari/Chrome.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-initial-first-page-button-labels-so-the-yes-label-includes-the-emoji-and-the-no-label-includes-the-emoji-alongside-their-respective-text",
+      "title": "Update the initial (first) page button labels so the YES label includes the emoji \"👅\" and the NO label includes the emoji \"😔\" alongside their respective text.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-smooth-motion-transition-for-the-evasive-no-button-movement-on-hover-approach-while-keeping-the-current-evasion-behavior-speed-the-same-do-not-make-the-no-button-easier-to-click",
+      "title": "Add a smooth motion transition for the evasive NO button movement on hover/approach while keeping the current evasion behavior speed the same (do not make the NO button easier to click).",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-use-a-high-end-romantic-style-font-consistently-across-the-entire-webpage-all-states-including-headings-body-text-and-both-buttons",
+      "title": "Use a high-end, romantic-style font consistently across the entire webpage (all states), including headings, body text, and both buttons.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-celebratory-post-yes-message-copy-to-replace-the-name-zainab-with-hamza-and-append-the-additional-romantic-lines-requested-by-the-user-keeping-all-user-facing-text-in-english-and-preserving-the-existing-romantic-playful-tone",
+      "title": "Update the celebratory (post-YES) message copy to replace the name \"Zainab\" with \"Hamza\" and append the additional romantic lines requested by the user, keeping all user-facing text in English and preserving the existing romantic/playful tone.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-post-yes-celebration-state-user-facing-message-copy-to-use-the-name-zainab-hamza-as-requested-replacing-the-current-single-name-usage-currently-hamza-while-keeping-all-user-facing-text-in-english-and-preserving-the-existing-romantic-playful-tone",
+      "title": "Update the post-YES (celebration state) user-facing message copy to use the name “Zainab Hamza” as requested, replacing the current single-name usage (currently “Hamza”) while keeping all user-facing text in English and preserving the existing romantic/playful tone.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-last-final-line-of-the-post-yes-celebratory-message-in-frontend-src-components-valentineprompt-tsx-to-exactly-your-hamza-loves-you-soo-muchieee",
+      "title": "Update the last (final) line of the post-YES celebratory message in `frontend/src/components/ValentinePrompt.tsx` to exactly: \"Your Hamza loves you soo muchieee\".",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-components-valentineprompt-tsx-in-the-post-yes-celebration-state-message-append-a-new-final-line-after-the-existing-final-line-your-hamza-loves-you-soo-muchieee-with-the-exact-text-please-be-my-wife-and-the-mother-of-my-kids-i-love-you-infinte-times",
+      "title": "In `frontend/src/components/ValentinePrompt.tsx`, in the post-YES celebration state message, append a new final line AFTER the existing final line \"Your Hamza loves you soo muchieee\" with the exact text: \"PLEASE BE MY WIFE AND THE MOTHER OF MY KIDS I LOVE YOU INFINTE TIMES\".",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-components-valentineprompt-tsx-add-new-gen-z-romantic-emoji-filled-lines-of-copy-to-both-a-the-initial-prompt-state-before-clicking-yes-and-b-the-post-yes-celebration-message-as-additional-lines-do-not-replace-or-remove-any-existing-user-facing-text",
+      "title": "In `frontend/src/components/ValentinePrompt.tsx`, add new Gen-Z, romantic, emoji-filled lines of copy to BOTH (a) the initial prompt state (before clicking YES) and (b) the post-YES celebration message, as additional lines (do not replace or remove any existing user-facing text).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-use-the-following-exact-new-user-facing-lines-english-only-for-the-added-gen-z-romantic-emoji-filled-copy-initial-prompt-state-display-these-as-separate-lines-directly-under-will-you-be-my-valentine-1-zainab-hamza-be-so-fr-you-me-main-character-energy-2-say-yes-and-i-ll-simp-respectfully-forever-celebration-state-display-these-as-separate-lines-after-the-existing-first-celebration-sentence-good-choice-zainab-hamza-this-is-the-start-of-something-beautiful-and-before-the-existing-longer-romantic-spans-1-okayyyy-periodddd-we-re-officially-a-duo-2-i-m-down-bad-and-proud-you-re-my-favorite-notification",
+      "title": "Use the following exact new user-facing lines (English-only) for the added Gen-Z romantic emoji-filled copy.\n\nInitial prompt state (display these as separate lines directly under “Will you be my Valentine?”):\n1) \"Zainab Hamza, be so fr… you + me = main character energy ✨💞\"\n2) \"Say yes and I’ll simp respectfully forever 😌🖤🌸\"\n\nCelebration state (display these as separate lines after the existing first celebration sentence \"Good choice, Zainab Hamza! 😊 This is the start of something beautiful! 💖\" and before the existing longer romantic spans):\n1) \"Okayyyy periodddd 😭💗 we’re officially a duo.\"\n2) \"I’m down bad and proud—you're my favorite notification 📲💞\"",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-components-valentineprompt-tsx-add-additional-gen-z-romantic-emoji-heavy-lines-of-user-facing-text-in-both-the-initial-prompt-state-and-the-post-yes-celebration-state-keeping-all-existing-user-facing-text-unchanged-additive-only",
+      "title": "In `frontend/src/components/ValentinePrompt.tsx`, add additional Gen-Z, romantic, emoji-heavy lines of user-facing text in BOTH the initial prompt state and the post-YES celebration state, keeping all existing user-facing text unchanged (additive only).",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-newly-added-gen-z-romantic-lines-are-english-only-romantic-and-playful-and-do-not-include-threats-or-graphic-violence",
+      "title": "Ensure all newly added Gen-Z romantic lines are English-only, romantic and playful, and do not include threats or graphic violence.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-post-yes-celebration-state-in-frontend-src-components-valentineprompt-tsx-remove-the-romantic-meme-gif-entirely-and-replace-it-with-the-two-user-uploaded-photos-stacked-vertically-displayed-above-all-celebratory-text",
+      "title": "In the post-YES celebration state in `frontend/src/components/ValentinePrompt.tsx`, remove the romantic/meme GIF entirely and replace it with the two user-uploaded photos, stacked vertically, displayed above all celebratory text.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-two-uploaded-image-files-to-the-frontend-as-static-assets-under-frontend-public-assets-generated-and-reference-them-from-the-celebration-state-ui-using-stable-filenames-do-not-fetch-them-from-the-backend",
+      "title": "Add the two uploaded image files to the frontend as static assets under `frontend/public/assets/generated/` and reference them from the celebration state UI using stable filenames (do not fetch them from the backend).",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-styling-in-frontend-src-index-css-or-tailwind-class-usage-to-ensure-the-two-celebration-photos-fit-cleanly-within-the-card-remain-responsive-on-mobile-ipad-preserve-aspect-ratio-and-visually-match-the-existing-black-and-pink-romantic-theme",
+      "title": "Update styling in `frontend/src/index.css` (or Tailwind class usage) to ensure the two celebration photos fit cleanly within the card, remain responsive on mobile/iPad, preserve aspect ratio, and visually match the existing black-and-pink romantic theme.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-components-valentineprompt-tsx-when-the-user-clicks-yes-and-the-celebration-state-renders-automatically-open-a-fullscreen-photo-viewer-immediately-on-entry-no-additional-tap-click-required",
+      "title": "In `frontend/src/components/ValentinePrompt.tsx`, when the user clicks YES and the celebration state renders, automatically open a fullscreen photo viewer immediately on entry (no additional tap/click required).",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-fullscreen-photo-viewer-shows-both-celebration-photos-using-the-existing-static-assets-assets-generated-valentine-photo-1-jpg-and-assets-generated-valentine-photo-2-jpg-stacked-vertically-and-that-all-existing-celebration-text-remains-displayed-directly-beneath-the-photos-within-the-same-fullscreen-experience",
+      "title": "Ensure the fullscreen photo viewer shows BOTH celebration photos (using the existing static assets `/assets/generated/valentine-photo-1.jpg` and `/assets/generated/valentine-photo-2.jpg`) stacked vertically, and that all existing celebration text remains displayed directly beneath the photos (within the same fullscreen experience).",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-the-fullscreen-photo-viewer-to-match-the-existing-black-and-pink-romantic-theme-and-avoid-interaction-regressions-no-accidental-background-scrolling-no-layout-breakage-and-no-impact-to-the-evasive-no-button-behavior-on-the-initial-screen",
+      "title": "Style the fullscreen photo viewer to match the existing black-and-pink romantic theme and avoid interaction regressions (no accidental background scrolling, no layout breakage, and no impact to the evasive NO button behavior on the initial screen).",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-post-yes-celebration-experience-so-it-does-not-use-any-fullscreen-lightbox-overlay-behavior-when-the-user-clicks-yes-the-celebration-ui-must-render-inline-on-the-page-within-the-normal-layout-with-no-additional-click-tap-required-to-view-the-photos",
+      "title": "Update the post-YES celebration experience so it does NOT use any fullscreen/lightbox/overlay behavior. When the user clicks YES, the celebration UI must render inline on the page (within the normal layout), with no additional click/tap required to view the photos.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-inline-post-yes-celebration-state-display-both-existing-images-assets-generated-valentine-photo-1-jpg-and-assets-generated-valentine-photo-2-jpg-stacked-vertically-at-the-top-styled-resized-to-fit-nicely-on-screen-not-full-size-fullscreen-with-all-existing-celebration-text-rendered-directly-beneath-the-photos",
+      "title": "In the inline post-YES celebration state, display both existing images `/assets/generated/valentine-photo-1.jpg` and `/assets/generated/valentine-photo-2.jpg` stacked vertically at the top, styled/resized to fit nicely on screen (not full-size fullscreen), with all existing celebration text rendered directly beneath the photos.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-disable-any-fullscreen-specific-behaviors-that-would-cause-interaction-regressions-for-the-inline-celebration-state-e-g-body-scroll-locking-fixed-positioning-overlay-only-scrolling-ensure-the-page-remains-usable-on-ipad-mobile-safari-chrome-with-no-accidental-background-scroll-locking-caused-by-the-celebration-state",
+      "title": "Remove/disable any fullscreen-specific behaviors that would cause interaction regressions for the inline celebration state (e.g., body scroll locking, fixed positioning, overlay-only scrolling). Ensure the page remains usable on iPad/mobile Safari/Chrome with no accidental background scroll locking caused by the celebration state.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-that-when-the-user-clicks-yes-the-post-yes-celebration-state-renders-the-two-existing-static-images-inline-not-fullscreen-stacked-vertically-at-the-top-of-the-celebration-content-directly-above-all-celebratory-text-with-no-additional-user-interaction-required",
+      "title": "Ensure that when the user clicks YES, the post-YES celebration state renders the two existing static images inline (not fullscreen) stacked vertically at the top of the celebration content, directly above all celebratory text, with no additional user interaction required.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-reported-issue-where-the-celebration-photos-do-not-appear-as-expected-by-improving-reliability-of-image-loading-rendering-e-g-ensure-correct-static-paths-are-used-avoid-css-layout-states-that-hide-the-images-and-provide-a-graceful-inline-fallback-if-an-image-fails-to-load-while-keeping-the-existing-black-and-pink-romantic-theme-and-all-existing-celebration-copy-unchanged",
+      "title": "Fix the reported issue where the celebration photos do not appear as expected by improving reliability of image loading/rendering (e.g., ensure correct static paths are used, avoid CSS/layout states that hide the images, and provide a graceful inline fallback if an image fails to load) while keeping the existing black-and-pink romantic theme and all existing celebration copy unchanged.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-celebration-state-inline-photo-loading-so-that-both-static-images-at-assets-generated-valentine-photo-1-jpg-and-assets-generated-valentine-photo-2-jpg-reliably-render-after-clicking-yes-instead-of-showing-the-fallback-text-photo-could-not-be-loaded",
+      "title": "Fix the celebration-state inline photo loading so that both static images at `/assets/generated/valentine-photo-1.jpg` and `/assets/generated/valentine-photo-2.jpg` reliably render after clicking YES, instead of showing the fallback text \"Photo could not be loaded\".",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-harden-static-asset-url-handling-for-the-celebration-photos-so-the-image-src-works-correctly-when-the-app-is-served-from-a-non-root-base-path-e-g-behind-a-gateway-or-under-a-subdirectory-without-changing-the-filenames-or-the-inline-layout",
+      "title": "Harden static asset URL handling for the celebration photos so the image `src` works correctly when the app is served from a non-root base path (e.g., behind a gateway or under a subdirectory), without changing the filenames or the inline layout.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-the-celebrationphoto-component-s-reliability-ensure-it-resets-its-error-loading-state-when-src-changes-and-provide-a-graceful-retry-friendly-rendering-path-so-transient-decode-load-issues-do-not-permanently-lock-the-component-into-the-fallback-state",
+      "title": "Improve the `CelebrationPhoto` component’s reliability: ensure it resets its error/loading state when `src` changes, and provide a graceful retry-friendly rendering path so transient decode/load issues do not permanently lock the component into the fallback state.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a romantic interactive Valentine webpage with Yes/No buttons: No dodges cursor; Yes shows a meme GIF and personalized message.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Update the UI to a black-and-pink romantic theme and ensure the fully interactive page runs well on iPad and other devices in Chrome and Safari using plain HTML/CSS/JavaScript.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Adjust the evasive “No” button behavior to be completely unreachable by moving away extremely fast when approached/hovered (including on touch devices).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add emojis to the initial page button labels: YES uses \"👅\" and NO uses \"😔\" alongside the text.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add a smooth motion transition effect for the evasive NO interaction (on hover/approach) while keeping the existing evasive movement speed the same.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Use high-end, romantic-style fonts consistently across the entire webpage (all states).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Update the celebratory/personalized message copy to use the names \"Zainab\" and \"Hamza\" (as requested: \"zainab hamza\").",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Update the last line of the celebratory (post-YES) message text to: \"Your Hamza loves you soo muchieee\".",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Expand the celebratory (post-YES) message with additional romantic lines expressing lifelong love, shared future, and forever together.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Append a new final line after the existing last line: \"PLEASE BE MY WIFE AND THE MOTHER OF MY KIDS I LOVE YOU INFINTE TIMES\".",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add beautiful Gen-Z humor romantic emoji-filled lines to the user-facing text in BOTH the initial prompt and the post-YES celebration message (additive, not replacing existing lines).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add additional (more) Gen-Z, emoji-heavy romantic text lines beyond the currently specified ones, keeping them additive to existing copy.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "In the post-YES celebration state, remove the romantic/meme GIF and replace it with two provided photos stacked vertically, positioned above all celebratory text.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "On the post-YES celebration screen, do NOT use fullscreen/lightbox; instead show the two photos inline (stacked vertically) styled and resized to fit nicely on-screen, with the celebratory text remaining directly below.",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Romantic interactive Valentine single-purpose page with evasive No button and Yes celebration",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

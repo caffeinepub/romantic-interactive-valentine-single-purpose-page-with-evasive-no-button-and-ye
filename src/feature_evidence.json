@@ -1,0 +1,62 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-fix-the-celebration-state-inline-photo-loading-so-that-both-static-images-at-assets-generated-valentine-photo-1-jpg-and-assets-generated-valentine-photo-2-jpg-reliably-render-after-clicking-yes-instead-of-showing-the-fallback-text-photo-could-not-be-loaded",
+      "featureTitle": "Fix the celebration-state inline photo loading so that both static images at `/assets/generated/valentine-photo-1.jpg` and `/assets/generated/valentine-photo-2.jpg` reliably render after clicking YES, instead of showing the fallback text \"Photo could not be loaded\".",
+      "files": [
+        "frontend/src/components/CelebrationPhoto.tsx",
+        "frontend/src/components/InlineCelebration.tsx",
+        "frontend/src/utils/assetUrl.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-33"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-harden-static-asset-url-handling-for-the-celebration-photos-so-the-image-src-works-correctly-when-the-app-is-served-from-a-non-root-base-path-e-g-behind-a-gateway-or-under-a-subdirectory-without-changing-the-filenames-or-the-inline-layout",
+      "featureTitle": "Harden static asset URL handling for the celebration photos so the image `src` works correctly when the app is served from a non-root base path (e.g., behind a gateway or under a subdirectory), without changing the filenames or the inline layout.",
+      "files": [
+        "frontend/src/components/InlineCelebration.tsx",
+        "frontend/src/utils/assetUrl.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-34"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-improve-the-celebrationphoto-component-s-reliability-ensure-it-resets-its-error-loading-state-when-src-changes-and-provide-a-graceful-retry-friendly-rendering-path-so-transient-decode-load-issues-do-not-permanently-lock-the-component-into-the-fallback-state",
+      "featureTitle": "Improve the `CelebrationPhoto` component’s reliability: ensure it resets its error/loading state when `src` changes, and provide a graceful retry-friendly rendering path so transient decode/load issues do not permanently lock the component into the fallback state.",
+      "files": [
+        "frontend/src/components/CelebrationPhoto.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-35"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

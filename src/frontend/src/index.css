@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 1rem;
+        /* Black and Pink palette - Light mode */
+        --background: 0.12 0.01 0;
+        --foreground: 0.98 0.01 330;
+        --card: 0.18 0.02 0;
+        --card-foreground: 0.98 0.01 330;
+        --popover: 0.18 0.02 0;
+        --popover-foreground: 0.98 0.01 330;
+        --primary: 0.65 0.25 340;
+        --primary-foreground: 0.98 0.01 330;
+        --secondary: 0.25 0.02 0;
+        --secondary-foreground: 0.98 0.01 330;
+        --muted: 0.30 0.02 0;
+        --muted-foreground: 0.70 0.02 330;
+        --accent: 0.55 0.28 345;
+        --accent-foreground: 0.98 0.01 330;
+        --destructive: 0.55 0.22 25;
+        --destructive-foreground: 0.98 0.01 330;
+        --border: 0.35 0.03 340;
+        --input: 0.30 0.02 0;
+        --ring: 0.65 0.25 340;
+        --romantic-primary: 0.65 0.28 340;
+        --romantic-secondary: 0.55 0.25 345;
+        --romantic-accent: 0.70 0.30 335;
+    }
+
+    .dark {
+        --background: 0.12 0.01 0;
+        --foreground: 0.98 0.01 330;
+        --card: 0.18 0.02 0;
+        --card-foreground: 0.98 0.01 330;
+        --popover: 0.18 0.02 0;
+        --popover-foreground: 0.98 0.01 330;
+        --primary: 0.65 0.25 340;
+        --primary-foreground: 0.98 0.01 330;
+        --secondary: 0.25 0.02 0;
+        --secondary-foreground: 0.98 0.01 330;
+        --muted: 0.30 0.02 0;
+        --muted-foreground: 0.70 0.02 330;
+        --accent: 0.55 0.28 345;
+        --accent-foreground: 0.98 0.01 330;
+        --destructive: 0.55 0.22 25;
+        --destructive-foreground: 0.98 0.01 330;
+        --border: 0.35 0.03 340;
+        --input: 0.30 0.02 0;
+        --ring: 0.65 0.25 340;
+        --romantic-primary: 0.65 0.28 340;
+        --romantic-secondary: 0.55 0.25 345;
+        --romantic-accent: 0.70 0.30 335;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-family: 'Playfair Display', 'Georgia', serif;
+        touch-action: pan-y;
+        overscroll-behavior: none;
+    }
+
+    /* Ensure buttons inherit the romantic font */
+    button {
+        font-family: 'Playfair Display', 'Georgia', serif;
+    }
+
+    /* Headings use the script font for extra romance */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Great Vibes', 'Playfair Display', cursive;
+    }
+}
+
+@layer utilities {
+    /* Valentine Container */
+    .valentine-container {
+        @apply relative w-full min-h-screen flex items-center justify-center p-4;
+        background: linear-gradient(135deg, 
+            oklch(0.08 0.01 0) 0%, 
+            oklch(0.12 0.02 340) 50%, 
+            oklch(0.15 0.03 350) 100%);
+        overflow: visible;
+        touch-action: pan-y;
+    }
+
+    /* Valentine Card */
+    .valentine-card {
+        @apply relative z-10 w-full max-w-2xl;
+        @apply shadow-2xl backdrop-blur-sm;
+        background: oklch(var(--card) / 0.95);
+        border: 2px solid oklch(var(--romantic-primary) / 0.5);
+        animation: cardGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes cardGlow {
+        0%, 100% {
+            box-shadow: 0 0 30px oklch(var(--romantic-primary) / 0.4),
+                        0 0 60px oklch(var(--romantic-accent) / 0.3);
+        }
+        50% {
+            box-shadow: 0 0 50px oklch(var(--romantic-primary) / 0.6),
+                        0 0 90px oklch(var(--romantic-accent) / 0.4);
+        }
+    }
+
+    /* Heart Icon */
+    .heart-icon {
+        @apply w-20 h-20 mx-auto;
+        color: oklch(var(--romantic-primary));
+        filter: drop-shadow(0 0 25px oklch(var(--romantic-primary) / 0.7));
+        animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        10% { transform: scale(1.1); }
+        20% { transform: scale(1); }
+        30% { transform: scale(1.15); }
+        40% { transform: scale(1); }
+    }
+
+    /* Question Text */
+    .question-text {
+        @apply text-4xl md:text-5xl lg:text-6xl font-bold;
+        background: linear-gradient(135deg, 
+            oklch(0.75 0.30 340), 
+            oklch(0.85 0.25 350));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 0 30px oklch(var(--romantic-primary) / 0.3);
+    }
+
+    /* Buttons Container */
+    .buttons-container {
+        @apply relative flex flex-col sm:flex-row gap-6 justify-center items-center mt-8;
+        min-height: 250px;
+        width: 100%;
+        touch-action: none;
+    }
+
+    /* Yes Button */
+    .yes-button {
+        @apply text-xl font-bold px-12 py-6 rounded-2xl z-10;
+        background: linear-gradient(135deg, 
+            oklch(0.60 0.28 340), 
+            oklch(0.70 0.30 350));
+        color: oklch(0.98 0.01 330);
+        box-shadow: 0 8px 32px oklch(var(--romantic-primary) / 0.6),
+                    0 0 60px oklch(var(--romantic-primary) / 0.3);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        border: 2px solid oklch(0.75 0.30 340);
+    }
+
+    .yes-button:hover {
+        transform: scale(1.1) translateY(-4px);
+        box-shadow: 0 12px 40px oklch(var(--romantic-primary) / 0.8),
+                    0 0 80px oklch(var(--romantic-primary) / 0.5);
+    }
+
+    /* No Button */
+    .no-button {
+        @apply text-xl font-bold px-12 py-6 rounded-2xl;
+        border: 2px solid oklch(var(--romantic-primary) / 0.4);
+        background: oklch(var(--card) / 0.8);
+        color: oklch(0.85 0.20 340);
+        cursor: pointer;
+        user-select: none;
+        touch-action: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+
+    /* Smooth evasion with transform - keeps responsiveness but adds smooth motion */
+    .no-button-evade {
+        transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        will-change: transform;
+    }
+
+    /* Disable smooth motion for users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .no-button-evade {
+            transition: none !important;
+        }
+    }
+
+    /* Floating Hearts */
+    .floating-hearts {
+        @apply absolute inset-0 pointer-events-none overflow-hidden;
+        z-index: 1;
+    }
+
+    .floating-heart {
+        @apply absolute w-8 h-8 opacity-40;
+        color: oklch(var(--romantic-primary));
+        filter: drop-shadow(0 0 10px oklch(var(--romantic-primary) / 0.5));
+        animation: floatUp 5s ease-in infinite;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.4;
+        }
+        90% {
+            opacity: 0.4;
+        }
+        100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* Inline Celebration Container */
+    .inline-celebration-container {
+        @apply relative w-full py-8;
+        z-index: 10;
+        position: relative;
+    }
+
+    /* Photos container - inline stacked */
+    .inline-photos-container {
+        @apply flex flex-col gap-4 px-4 pb-4;
+        width: 100%;
+        position: relative;
+        z-index: 20;
+    }
+
+    /* Photo wrapper for reliable rendering */
+    .inline-photo-wrapper {
+        @apply w-full;
+        position: relative;
+        z-index: 20;
+        display: block;
+    }
+
+    /* Individual inline photo */
+    .inline-photo {
+        @apply w-full h-auto rounded-2xl;
+        object-fit: contain;
+        border: 3px solid oklch(var(--romantic-primary) / 0.6);
+        box-shadow: 0 0 30px oklch(var(--romantic-primary) / 0.5),
+                    0 0 60px oklch(var(--romantic-accent) / 0.3);
+        max-height: 400px;
+        object-position: center;
+        display: block;
+        position: relative;
+        z-index: 20;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    /* Loading state for photos */
+    .inline-photo-loading {
+        opacity: 0;
+        animation: fadeInPhoto 0.5s ease-in forwards;
+    }
+
+    /* Loaded state for photos */
+    .inline-photo-loaded {
+        opacity: 1;
+    }
+
+    @keyframes fadeInPhoto {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Fallback for failed photo loads */
+    .inline-photo-fallback {
+        @apply w-full rounded-2xl p-8 text-center;
+        border: 2px dashed oklch(var(--romantic-primary) / 0.4);
+        background: oklch(var(--muted) / 0.3);
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Celebration text beneath photos */
+    .inline-celebration-text {
+        @apply px-6 py-4;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Inline celebration title */
+    .inline-celebration-title {
+        @apply text-4xl md:text-5xl font-bold text-center mb-6;
+        background: linear-gradient(135deg, 
+            oklch(0.75 0.30 340), 
+            oklch(0.85 0.25 350));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 0 20px oklch(var(--romantic-primary) / 0.4));
+    }
+
+    /* Inline celebration message */
+    .inline-celebration-message {
+        @apply text-lg md:text-xl leading-relaxed;
+        color: oklch(var(--foreground));
+    }
+
+    .inline-celebration-message p {
+        @apply mb-2;
+    }
+}
