@@ -1,77 +1,82 @@
 {
   "kind": "build_request",
-  "title": "Fix inline celebration photos failing to load",
+  "title": "Replace celebration photos with newly uploaded images and eliminate inline photo load errors",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-33",
-      "text": "Fix the celebration-state inline photo loading so that both static images at `/assets/generated/valentine-photo-1.jpg` and `/assets/generated/valentine-photo-2.jpg` reliably render after clicking YES, instead of showing the fallback text \"Photo could not be loaded\".",
+      "id": "REQ-36",
+      "text": "Replace the existing celebration photo assets by overwriting the static files at `frontend/public/assets/generated/valentine-photo-1.jpg` and `frontend/public/assets/generated/valentine-photo-2.jpg` with the two newly uploaded images, keeping the exact same target filenames so the UI continues to reference stable paths.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-msg-4",
-          "recent-msg-6"
+          "msg-recent-4",
+          "msg-recent-6"
         ],
         "quotes": [
-          "its saying photo could not be loaded. please fix this immidealty",
-          "fix it now"
+          "make sure these both images open and dosent show any error",
+          "YES replace the existing celebration photos (valentine-photo-1.jpg and valentine-photo-2.jpg),"
         ]
       },
       "acceptanceCriteria": [
-        "On the YES/celebration state, both photos render inline at the top of the celebration content on desktop and mobile/iPad Safari/Chrome.",
-        "The fallback text \"Photo could not be loaded\" does not appear when the assets exist and are reachable.",
-        "No backend calls are used to fetch the images; they are loaded as static assets from the frontend."
+        "`frontend/public/assets/generated/valentine-photo-1.jpg` is replaced with the uploaded image `IMG_20251223_183308_541-1.jpg` content (filename remains `valentine-photo-1.jpg`).",
+        "`frontend/public/assets/generated/valentine-photo-2.jpg` is replaced with the uploaded image `IMG_20260125_131055_525-1.jpg` content (filename remains `valentine-photo-2.jpg`).",
+        "After clicking YES, both images render inline above the celebration text without showing the fallback text \"Photo could not be loaded\" on mobile/iPad Safari and Chrome."
       ]
     },
     {
-      "id": "REQ-34",
-      "text": "Harden static asset URL handling for the celebration photos so the image `src` works correctly when the app is served from a non-root base path (e.g., behind a gateway or under a subdirectory), without changing the filenames or the inline layout.",
+      "id": "REQ-37",
+      "text": "Ensure the inline celebration view continues to reference the two celebration photos using base-path-aware URLs (via `getAssetUrl`) and does not introduce any fullscreen/lightbox behavior; the photos must render inline stacked vertically above all celebration text.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-msg-4"
+          "msg-recent-4"
         ],
         "quotes": [
-          "its saying photo could not be loaded. please fix this immidealty"
+          "make sure these both images open and dosent show any error"
         ]
       },
       "acceptanceCriteria": [
-        "Photo URLs resolve correctly whether the app is served at `/` or under a base path (no 404s for the two photo requests).",
-        "The celebration UI remains inline (no fullscreen/lightbox behavior) with the photos stacked vertically above the existing celebration text."
+        "In the post-YES inline celebration state, both photos render stacked vertically at the top and the celebration text remains directly beneath them in the normal page layout.",
+        "Image `src` values are constructed with `getAssetUrl('assets/generated/valentine-photo-1.jpg')` and `getAssetUrl('assets/generated/valentine-photo-2.jpg')` (or an equivalent base-path-safe mechanism).",
+        "No fullscreen overlay, modal, or scroll-locking behavior is triggered on YES."
       ]
     },
     {
-      "id": "REQ-35",
-      "text": "Improve the `CelebrationPhoto` component’s reliability: ensure it resets its error/loading state when `src` changes, and provide a graceful retry-friendly rendering path so transient decode/load issues do not permanently lock the component into the fallback state.",
+      "id": "REQ-38",
+      "text": "Harden the `CelebrationPhoto` component so transient load/decode timing issues do not permanently force the error fallback; implement an automatic retry path (without user interaction) before showing the error state, while keeping all user-facing text unchanged.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-msg-4"
+          "msg-recent-4"
         ],
         "quotes": [
-          "its saying photo could not be loaded. please fix this immidealty"
+          "make sure these both images open and dosent show any error"
         ]
       },
       "acceptanceCriteria": [
-        "If the `src` prop changes (or the component remounts), the component attempts to load again instead of staying stuck on the fallback UI.",
-        "Successful loads show the image with the existing fade-in behavior and do not regress the current styling/theme."
+        "If an image fails to load due to a transient issue, the component automatically retries loading (e.g., by re-mounting the `<img>` / changing its key) before entering the fallback state.",
+        "The component does not remain stuck in the error state on subsequent successful loads for the same `src`.",
+        "The only fallback text (if it must appear) remains exactly: \"Photo could not be loaded\" (no new user-facing copy is introduced)."
       ]
     }
   ],
   "constraints": [
-    "Do not introduce any fullscreen/lightbox/overlay behavior for the celebration photos; the celebration must render inline in the normal page layout.",
-    "Keep all existing celebration copy unchanged (including names and all lines) and keep all user-facing text in English.",
-    "Do not fetch images from the backend; use the existing static files under `frontend/public/assets/generated/` with the same filenames.",
-    "Do not edit any frontend immutable paths (e.g., `frontend/src/main.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/hooks/useInternetIdentity.ts(x)`, or anything under `frontend/src/components/ui`)."
+    "Frontend immutable paths must not be edited: `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and anything under `frontend/src/components/ui`.",
+    "Do not change the inline celebration requirement into a fullscreen/lightbox experience.",
+    "Do not fetch images from the backend; serve them as static assets from `frontend/public/assets/generated/`.",
+    "Keep all user-facing text in English."
   ],
   "nonGoals": [
-    "Adding new images or changing the two existing photo assets.",
-    "Changing the evasive NO button behavior or any initial-screen interaction model beyond what is necessary to fix image rendering.",
-    "Adding backend logic or persistence (backend remains unused for this fix)."
+    "Adding new celebration photos with new filenames (the uploaded images must replace the existing `valentine-photo-1.jpg` and `valentine-photo-2.jpg`).",
+    "Changing the celebratory message copy or the black-and-pink romantic theme.",
+    "Backend changes or adding new Motoko methods (no backend logic is required for static image rendering)."
   ],
   "imageRequirements": {
     "required": [],
-    "edits": []
+    "edits": [
+      "Replace celebration photo 1 asset (IMG_20251223_183308_541-1.jpg > valentine-photo-1.jpg)",
+      "Replace celebration photo 2 asset (IMG_20260125_131055_525-1.jpg > valentine-photo-2.jpg)"
+    ]
   },
   "userProfileUpdate": {
     "goalsToAdd": [],

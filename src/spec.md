@@ -1,11 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Fix celebration-state inline photo rendering so the two existing static images reliably load after clicking YES across devices and base paths.
+**Goal:** Replace the two inline celebration photos with the newly uploaded images and prevent transient image load/decode issues from showing the inline fallback error.
 
 **Planned changes:**
-- Update celebration photo `src` construction to work correctly when the app is served from `/` or from a non-root base path (without renaming files or changing inline layout).
-- Improve the `CelebrationPhoto` component state handling so it resets error/loading when `src` changes or on remount, preventing it from getting stuck on the fallback.
-- Keep photos inline (stacked vertically above the existing celebration text) and preserve current fade-in styling while removing erroneous fallback display when assets are reachable.
+- Overwrite the existing static assets `frontend/public/assets/generated/valentine-photo-1.jpg` and `frontend/public/assets/generated/valentine-photo-2.jpg` with the newly uploaded images while keeping the exact same filenames/paths.
+- Ensure the inline celebration view references both images using base-path-aware URLs (e.g., `getAssetUrl(...)`) and continues to render them inline stacked vertically above the celebration text (no fullscreen/lightbox behavior).
+- Update the `CelebrationPhoto` component to automatically retry image loading on transient failures before showing the existing fallback text, without changing any user-facing copy.
 
-**User-visible outcome:** After clicking YES, both celebration photos render inline above the celebration message on desktop and mobile/iPad Safari/Chrome, without showing “Photo could not be loaded” when the assets exist.
+**User-visible outcome:** After clicking YES, both celebration photos display inline (stacked vertically) above the celebration text on mobile/iPad Safari and Chrome without showing “Photo could not be loaded” due to transient loading issues.

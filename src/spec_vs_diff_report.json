@@ -1,34 +1,40 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T20:35:03.026Z",
-  "summary": "REQ-33/REQ-34 appear implemented via base-path-aware static URLs and inline rendering of both photos. REQ-35 is only partially addressed: state resets on `src` change, but there is no retry path for transient failures without a `src` change. The diff also introduces a fullscreen/overlay celebration viewer, which directly violates the stated constraint/non-goal.",
+  "generatedAt": "2026-02-12T20:43:54.104Z",
+  "summary": "Implemented automatic retry logic in CelebrationPhoto to avoid getting stuck in an error fallback, but the diff does not show the required static asset overwrites nor evidence that the inline celebration constructs image URLs via getAssetUrl. The diff summary text also indicates a fullscreen overlay viewer component that conflicts with the “no fullscreen/lightbox” constraint.",
   "missing_requirements": [
     {
-      "id": "REQ-35",
-      "requirement": "Provide a graceful retry-friendly rendering path so transient decode/load issues do not permanently lock the component into the fallback state.",
-      "reason": "`CelebrationPhoto` sets `hasError` permanently on error and renders only the fallback UI. It resets only when `src` changes (or remount with new `src`), but offers no retry mechanism (e.g., retry button/timer) when `src` is unchanged, so transient errors can still leave the user stuck.",
+      "id": "REQ-36",
+      "requirement": "Overwrite the existing static files at `frontend/public/assets/generated/valentine-photo-1.jpg` and `frontend/public/assets/generated/valentine-photo-2.jpg` with the newly uploaded images, keeping the same filenames.",
+      "reason": "No image/binary asset changes are shown in the diff. Only 3 text-based files are modified, and none are the JPG assets.",
       "evidence": [
-        "frontend/src/components/CelebrationPhoto.tsx"
+        "<file-diff>: Added: 0, Modified: 3 (no `frontend/public/assets/generated/*.jpg` entries in modified files list)"
+      ]
+    },
+    {
+      "id": "REQ-37",
+      "requirement": "Ensure the inline celebration view references the two photos using base-path-aware URLs via `getAssetUrl('assets/generated/valentine-photo-1.jpg')` and `getAssetUrl('assets/generated/valentine-photo-2.jpg')`, and does not introduce fullscreen/lightbox behavior; photos remain inline stacked vertically above text.",
+      "reason": "The diff does not include the inline celebration component or any usage of `getAssetUrl` for constructing the two image src values. The only code change shown is within `CelebrationPhoto.tsx`, which receives `src` as a prop and does not construct it.",
+      "evidence": [
+        "frontend/src/components/CelebrationPhoto.tsx",
+        "<file-diff>: Modified files list does not include `frontend/src/components/InlineCelebration.tsx` or `frontend/src/utils/assetUrl.ts`"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Added a fullscreen/lightbox/overlay celebration viewer that auto-opens, locks background scroll, and shows the photos in an overlay experience.",
-      "reason": "Explicitly disallowed by constraints: “Do not introduce any fullscreen/lightbox/overlay behavior for the celebration photos” and non-goal mentions no fullscreen/lightbox auto-open. This component is not requested for fixing inline photo loading.",
+      "description": "A fullscreen/lightbox-style celebration viewer that auto-opens on mount and locks background scroll.",
+      "reason": "Not requested and directly conflicts with the constraint/REQ-37 acceptance criteria prohibiting fullscreen overlay/modal/scroll-locking behavior.",
       "evidence": [
-        "frontend/src/components/FullscreenCelebrationViewer.tsx",
-        "frontend-file-summaries.txt"
+        "frontend-file-summaries.txt (entry for `frontend/src/components/FullscreenCelebrationViewer.tsx`: \"New fullscreen overlay component that auto-opens on mount... locks background scroll\")"
       ]
     }
   ],
-  "confidence": 0.72,
+  "confidence": 0.62,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/components/CelebrationPhoto.tsx",
-    "frontend/src/components/InlineCelebration.tsx",
-    "frontend/src/utils/assetUrl.ts",
     "project_state.json"
   ]
 }

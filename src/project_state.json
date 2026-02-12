@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 31,
+  "projectStateVersion": 33,
   "summary": "Build a single-purpose, advanced interactive romantic-themed webpage that asks the user to be the creator's Valentine, with Yes/No options where the No button evades hovering and clicking Yes shows a celebratory state with personalized text, styled with a black-and-pink theme and runnable on iPad/mobile browsers (Chrome/Safari) using only HTML/CSS/JavaScript; replace the celebration GIF with two vertically stacked photos displayed above the celebratory text, shown inline on the page (no fullscreen/lightbox auto-open).",
   "architectural_notes": [
     "Single-purpose interactive webpage: hover-evading 'No' button and 'Yes' click triggers celebratory GIF + personalized text.",
@@ -20,6 +20,7 @@
     "Celebration state shows error: \"photo could not be loaded\"; fix required so both inline photos reliably load/render above the text."
   ],
   "isFixRequest": true,
+  "imageRequirements": "## Edit Images\n- Replace celebration photo 1 asset (IMG_20251223_183308_541-1.jpg > valentine-photo-1.jpg)\n- Replace celebration photo 2 asset (IMG_20260125_131055_525-1.jpg > valentine-photo-2.jpg)",
   "existing_features": [
     {
       "id": "feature-create-a-single-purpose-romantic-advanced-interactive-webpage-that-asks-will-you-be-my-valentine-and-presents-exactly-two-options-yes-and-no",
@@ -300,6 +301,22 @@
         "REQ-35"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-celebration-photo-assets-by-overwriting-the-static-files-at-frontend-public-assets-generated-valentine-photo-1-jpg-and-frontend-public-assets-generated-valentine-photo-2-jpg-with-the-two-newly-uploaded-images-keeping-the-exact-same-target-filenames-so-the-ui-continues-to-reference-stable-paths",
+      "title": "Replace the existing celebration photo assets by overwriting the static files at `frontend/public/assets/generated/valentine-photo-1.jpg` and `frontend/public/assets/generated/valentine-photo-2.jpg` with the two newly uploaded images, keeping the exact same target filenames so the UI continues to reference stable paths.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-harden-the-celebrationphoto-component-so-transient-load-decode-timing-issues-do-not-permanently-force-the-error-fallback-implement-an-automatic-retry-path-without-user-interaction-before-showing-the-error-state-while-keeping-all-user-facing-text-unchanged",
+      "title": "Harden the `CelebrationPhoto` component so transient load/decode timing issues do not permanently force the error fallback; implement an automatic retry path (without user interaction) before showing the error state, while keeping all user-facing text unchanged.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -385,6 +402,20 @@
       "id": "AR-16",
       "summary": "On the post-YES celebration screen, do NOT use fullscreen/lightbox; instead show the two photos inline (stacked vertically) styled and resized to fit nicely on-screen, with the celebratory text remaining directly below.",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Replace the existing static celebration photos by overwriting `/assets/generated/valentine-photo-1.jpg` and `/assets/generated/valentine-photo-2.jpg` with the newly uploaded images (keep filenames the same) to ensure they load with zero errors.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Ensure the inline celebration view continues to reference the two celebration photos using base-path-aware URLs (via `getAssetUrl`) and does not introduce any fullscreen/lightbox behavior; the photos must render inline stacked vertically above all celebration text.",
+      "reqIds": [
+        "REQ-37"
+      ],
       "status": "pending"
     }
   ],
